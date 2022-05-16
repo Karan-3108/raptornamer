@@ -31,10 +31,10 @@ docker run --rm -d --name $CONTAINER_NAME \
     -e UNSAFE_CORS=true \
     -p 1317:1317 -p 26656:26656 -p 26657:26657 \
     --mount type=volume,source=raptord_data,target=/root \
-    ghcr.io/cosmoscontracts/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
+    ghcr.io/karan-3108/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
 
 # copy wasm to docker container
-docker cp versioned_builds/raptornamer_0_5_1.wasm $CONTAINER_NAME:/raptornamer_0_5_1.wasm
+docker cp versioned_builds/raptornamer_0_0_1.wasm $CONTAINER_NAME:/raptornamer_0_0_1.wasm
 
 # wait for chain to start
 sleep 5
@@ -54,7 +54,7 @@ echo "Address to deploy contracts: $1"
 echo "TX Flags: $TXFLAG"
 
 # upload raptornamer wasm
-CONTRACT_CODE=$($BINARY tx wasm store "/raptornamer_0_5_1.wasm" --from validator $TXFLAG --output json | jq -r '.logs[0].events[-1].attributes[0].value')
+CONTRACT_CODE=$($BINARY tx wasm store "/raptornamer_0_0_1.wasm" --from validator $TXFLAG --output json | jq -r '.logs[0].events[-1].attributes[0].value')
 echo "Stored: $CONTRACT_CODE"
 
 BALANCE_2=$($BINARY q bank balances $VALIDATOR_ADDR)

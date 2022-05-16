@@ -31,7 +31,7 @@ docker run --rm -d --name $CONTAINER_NAME \
     -e UNSAFE_CORS=true \
     -p 1317:1317 -p 26656:26656 -p 26657:26657 \
     --mount type=volume,source=raptord_data,target=/root \
-    ghcr.io/cosmoscontracts/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
+    ghcr.io/karan-3108/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
 
 # compile
 docker run --rm -v "$(pwd)":/code \
