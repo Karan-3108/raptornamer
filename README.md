@@ -48,7 +48,7 @@ The burn percentage is configured at instantiation time.
 Bootstrap the project like so:
 
 ```bash
-./scripts/deploy_local.sh juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
+./scripts/deploy_local.sh raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
 ```
 
 To use the account configured by the deploy script import the account

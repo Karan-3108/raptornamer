@@ -5,9 +5,9 @@
 # 2: key to use as --from argument
 # 3: name of the contract
 # 4: symbol for the contract
-BINARY='junod'
-DENOM='ujuno'
-CHAIN_ID='juno-1'
+BINARY='raptord'
+DENOM='uraptor'
+CHAIN_ID='raptor-1'
 RPC='http://localhost:26657/'
 LABEL="Raptornamer NFT nameservice"
 TXFLAG="--gas-prices auto --gas auto --gas-adjustment 2 -y -b block --chain-id $CHAIN_ID --node $RPC"

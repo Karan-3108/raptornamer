@@ -2,11 +2,11 @@
 
 set -e
 
-DEFAULT_DEV_ADDRESS="juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y"
+DEFAULT_DEV_ADDRESS="raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y"
 
-CONTAINER_NAME="juno_node_1"
-BINARY="docker exec -i $CONTAINER_NAME junod"
-DENOM='ujunox'
+CONTAINER_NAME="raptor_node_1"
+BINARY="docker exec -i $CONTAINER_NAME raptord"
+DENOM='uraptorx'
 CHAIN_ID='testing'
 RPC='http://localhost:26657/'
 TXFLAG="--gas-prices 0.1$DENOM --gas auto --gas-adjustment 1.3 -y -b block --chain-id $CHAIN_ID --node $RPC"
@@ -67,7 +67,7 @@ RES=$?
 # get contract addr
 CONTRACT_ADDRESS=$($BINARY q wasm list-contract-by-code $CONTRACT_CODE --output json | jq -r '.contracts[-1]')
 
-# provision juno default user
+# provision raptor default user
 echo "clip hire initial neck maid actor venue client foam budget lock catalog sweet steak waste crater broccoli pipe steak sister coyote moment obvious choose" | $BINARY keys add test-user --recover --keyring-backend test
 
 # init name
@@ -92,7 +92,7 @@ MINT='{
   }
 }'
 
-$BINARY tx wasm execute "$CONTRACT_ADDRESS" "$MINT" --from test-user $TXFLAG --amount 1000000ujunox
+$BINARY tx wasm execute "$CONTRACT_ADDRESS" "$MINT" --from test-user $TXFLAG --amount 1000000uraptorx
 
 # Print out config variables
 printf "\n ------------------------ \n"

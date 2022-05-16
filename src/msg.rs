@@ -33,7 +33,7 @@ pub struct InstantiateMsg {
     /// Symbol of the NFT contract
     pub symbol: String,
 
-    /// The token name of the native denom, e.g. ujuno uatom
+    /// The token name of the native denom, e.g. uraptor uatom
     pub native_denom: String,
     /// The decimals of the token
     /// Same format as decimals above, eg. if it is uatom, where 1 unit is 10^-6 ATOM, use 6 here

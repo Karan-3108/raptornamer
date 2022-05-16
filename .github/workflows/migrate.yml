@@ -22,4 +22,4 @@ jobs:
           override: true
 
       - name: Test migration
-        run: ./scripts/test_migrate.sh juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
+        run: ./scripts/test_migrate.sh raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y

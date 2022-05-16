@@ -2,15 +2,15 @@
 
 if [ "$1" = "" ]
 then
-  echo "Usage: $0 1 arg required - juno address"
+  echo "Usage: $0 1 arg required - raptor address"
   exit
 fi
 
 # pinched and adapted from DA0DA0
 IMAGE_TAG=${2:-"v4.0.0"}
-CONTAINER_NAME="juno_raptornamer"
-BINARY="docker exec -i $CONTAINER_NAME junod"
-DENOM='ujunox'
+CONTAINER_NAME="raptor_raptornamer"
+BINARY="docker exec -i $CONTAINER_NAME raptord"
+DENOM='uraptorx'
 CHAIN_ID='testing'
 RPC='http://localhost:26657/'
 TXFLAG="--gas-prices 0.1$DENOM --gas auto --gas-adjustment 1.3 -y -b block --chain-id $CHAIN_ID --node $RPC"
@@ -21,17 +21,17 @@ echo "Configured Block Gas Limit: $BLOCK_GAS_LIMIT"
 
 # kill any orphans
 docker kill $CONTAINER_NAME
-docker volume rm -f junod_data
+docker volume rm -f raptord_data
 
-# run junod setup script
+# run raptord setup script
 docker run --rm -d --name $CONTAINER_NAME \
     -e PASSWORD=xxxxxxxxx \
     -e STAKE_TOKEN=$DENOM \
     -e GAS_LIMIT="$GAS_LIMIT" \
     -e UNSAFE_CORS=true \
     -p 1317:1317 -p 26656:26656 -p 26657:26657 \
-    --mount type=volume,source=junod_data,target=/root \
-    ghcr.io/cosmoscontracts/juno:$IMAGE_TAG /opt/setup_and_run.sh $1
+    --mount type=volume,source=raptord_data,target=/root \
+    ghcr.io/cosmoscontracts/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
 
 # compile
 docker run --rm -v "$(pwd)":/code \

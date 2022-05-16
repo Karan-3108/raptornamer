@@ -45,7 +45,7 @@
       "minimum": 0.0
     },
     "native_denom": {
-      "description": "The token name of the native denom, e.g. ujuno uatom",
+      "description": "The token name of the native denom, e.g. uraptor uatom",
       "type": "string"
     },
     "short_name_surcharge": {

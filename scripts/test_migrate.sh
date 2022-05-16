@@ -2,15 +2,15 @@
 
 if [ "$1" = "" ]
 then
-  echo "Usage: $0 1 arg required - juno address"
+  echo "Usage: $0 1 arg required - raptor address"
   exit
 fi
 
 # pinched and adapted from DA0DA0
 IMAGE_TAG=${2:-"v4.0.0"}
-CONTAINER_NAME="juno_raptornamer"
-BINARY="docker exec -i $CONTAINER_NAME junod"
-DENOM='ujunox'
+CONTAINER_NAME="raptor_raptornamer"
+BINARY="docker exec -i $CONTAINER_NAME raptord"
+DENOM='uraptorx'
 CHAIN_ID='testing'
 RPC='http://localhost:26657/'
 TXFLAG="--gas-prices 0.1$DENOM --gas auto --gas-adjustment 1.3 -y -b block --chain-id $CHAIN_ID --node $RPC"
@@ -21,17 +21,17 @@ echo "Configured Block Gas Limit: $BLOCK_GAS_LIMIT"
 
 # kill any orphans
 docker kill $CONTAINER_NAME
-docker volume rm -f junod_data
+docker volume rm -f raptord_data
 
-# run junod setup script
+# run raptord setup script
 docker run --rm -d --name $CONTAINER_NAME \
     -e PASSWORD=xxxxxxxxx \
     -e STAKE_TOKEN=$DENOM \
     -e GAS_LIMIT="$GAS_LIMIT" \
     -e UNSAFE_CORS=true \
     -p 1317:1317 -p 26656:26656 -p 26657:26657 \
-    --mount type=volume,source=junod_data,target=/root \
-    ghcr.io/cosmoscontracts/juno:$IMAGE_TAG /opt/setup_and_run.sh $1
+    --mount type=volume,source=raptord_data,target=/root \
+    ghcr.io/cosmoscontracts/raptor:$IMAGE_TAG /opt/setup_and_run.sh $1
 
 # copy wasm to docker container
 docker cp versioned_builds/raptornamer_0_5_1.wasm $CONTAINER_NAME:/raptornamer_0_5_1.wasm
@@ -61,7 +61,7 @@ BALANCE_2=$($BINARY q bank balances $VALIDATOR_ADDR)
 echo "Post-store balance:"
 echo $BALANCE_2
 
-# provision juno default user i.e. juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
+# provision raptor default user i.e. raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
 echo "clip hire initial neck maid actor venue client foam budget lock catalog sweet steak waste crater broccoli pipe steak sister coyote moment obvious choose" | $BINARY keys add test-user --recover --keyring-backend test
 
 BASE_MINT_FEE=1000000
@@ -85,7 +85,7 @@ RAPTORNAMER_INIT='{
   "username_length_cap": 20
 }'
 echo "$RAPTORNAMER_INIT" | jq .
-$BINARY tx wasm instantiate $CONTRACT_CODE "$RAPTORNAMER_INIT" --from "validator" --label "raptornamer NFT nameservice" $TXFLAG --admin juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
+$BINARY tx wasm instantiate $CONTRACT_CODE "$RAPTORNAMER_INIT" --from "validator" --label "raptornamer NFT nameservice" $TXFLAG --admin raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y
 RES=$?
 
 # get contract addr
@@ -94,7 +94,7 @@ CONTRACT_ADDRESS=$($BINARY q wasm list-contract-by-code $CONTRACT_CODE --output 
 # init name
 MINT='{
   "mint": {
-    "owner": "juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y",
+    "owner": "raptor16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y",
     "token_id": "nigeltufnel",
     "token_uri": null,
     "extension": {
@@ -113,9 +113,9 @@ MINT='{
   }
 }'
 
-$BINARY tx wasm execute "$CONTRACT_ADDRESS" "$MINT" --from test-user $TXFLAG --amount 1000000ujunox
+$BINARY tx wasm execute "$CONTRACT_ADDRESS" "$MINT" --from test-user $TXFLAG --amount 1000000uraptorx
 
-OLD_NFT_INFO=$(junod q wasm contract-state smart $CONTRACT_ADDRESS '{"all_nft_info": {"token_id": "nigeltufnel"}}' --output json)
+OLD_NFT_INFO=$(raptord q wasm contract-state smart $CONTRACT_ADDRESS '{"all_nft_info": {"token_id": "nigeltufnel"}}' --output json)
 echo $OLD_NFT_INFO | jq .
 
 # compile current
