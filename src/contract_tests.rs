@@ -254,7 +254,7 @@ XGo8Un24WP40IT78XjKO
     const CREATOR: &str = "creator";
     const MINTER: &str = "jeff-vader";
     const CONTRACT_NAME: &str = "raptornamer";
-    const SYMBOL: &str = "WHO";
+    const SYMBOL: &str = "RNM";
 
     fn setup_contract(deps: DepsMut<'_>) -> Cw721MetadataContract<'static> {
         let contract = Cw721MetadataContract::default();

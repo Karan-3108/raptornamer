@@ -48,7 +48,7 @@ echo $BALANCE_2
 RAPTORNAMER_INIT='{
   "admin_address": "'"$DEFAULT_DEV_ADDRESS"'",
   "name": "Decentralized Name Service",
-  "symbol": "WHO",
+  "symbol": "RNM",
   "native_denom": "'"$DENOM"'",
   "native_decimals": 6,
   "token_cap": null,

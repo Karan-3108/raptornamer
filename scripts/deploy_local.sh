@@ -74,7 +74,7 @@ TOTAL_FEE=$((BASE_MINT_FEE + SURCHARGE_FEE))
 RAPTORNAMER_INIT='{
   "admin_address": "'"$1"'",
   "name": "Decentralized Name Service",
-  "symbol": "WHO",
+  "symbol": "RNM",
   "native_denom": "'"$DENOM"'",
   "native_decimals": 6,
   "token_cap": null,
