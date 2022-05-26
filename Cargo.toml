@@ -1,6 +1,6 @@
 [package]
 name = "raptornamer"
-version = "0.6.1"
+version = "0.1.0-alpha"
 authors = ["Alex Lynham <alex@lynh.am>"]
 edition = "2018"
 description = "NFT based metadata for PFP/user directory purposes"
